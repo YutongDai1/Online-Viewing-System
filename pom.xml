@@ -50,6 +50,12 @@
 					<artifactId>mysql-connector-java</artifactId>
 					<version>5.1.37</version>
 				</dependency>
+
+				<dependency>
+					<groupId>com.dyt</groupId>
+					<artifactId>server</artifactId>
+					<version>0.0.1-SNAPSHOT</version>
+				</dependency>
 		</dependencies>
 	</dependencyManagement>
 

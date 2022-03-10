@@ -14,7 +14,7 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 @EnableEurekaClient
 @ComponentScan("com.dyt")
-@MapperScan("com.dyt.system.mapper")
+@MapperScan("com.dyt.server.mapper")
 public class SystemApplication {
 
 
@@ -25,7 +25,7 @@ public class SystemApplication {
 		SpringApplication app = new SpringApplication(SystemApplication.class);
 		Environment env = (Environment) app.run(args).getEnvironment();
 		LOG.info("启动成功！！");
-		LOG.info("Eureka地址: \thttp://127.0.0.1:{}", env.getProperty("server.port"));
+		LOG.info("System地址: \thttp://127.0.0.1:{}", env.getProperty("server.port"));
 
 
 
