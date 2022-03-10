@@ -1,4 +1,4 @@
-package com.dyt.system;
+package com.dyt.system.config;
 
 
 import org.mybatis.spring.annotation.MapperScan;
