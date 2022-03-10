@@ -1,6 +1,7 @@
 package com.dyt.server.service;
 
 import com.dyt.server.domain.Test;
+import com.dyt.server.domain.TestExample;
 import com.dyt.server.mapper.TestMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,10 @@ public class TestService {
 
     public List<Test> list()
     {
-        return testMapper.list();
+        TestExample testExample = new TestExample();
+        //testExample.createCriteria().andIdEqualTo("1");
+        testExample.setOrderByClause("id desc");
+        return testMapper.selectByExample(testExample);
     }
 
 
