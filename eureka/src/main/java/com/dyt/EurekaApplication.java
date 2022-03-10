@@ -29,7 +29,6 @@ public class EurekaApplication {
 		LOG.info("Eureka地址: \thttp://127.0.0.1:{}", env.getProperty("server.port"));
 
 
-
 	}
 
 
