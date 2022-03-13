@@ -4,6 +4,7 @@ import com.dyt.server.domain.Chapter;
 import com.dyt.server.domain.ChapterExample;
 import com.dyt.server.dto.ChapterDto;
 import com.dyt.server.mapper.ChapterMapper;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class ChapterService {
 
 
     public List<ChapterDto> list() {
+        PageHelper.startPage(2, 1);
         ChapterExample chapterExample = new ChapterExample();
         List<Chapter> chapters = chapterMapper.selectByExample(chapterExample);
         List<ChapterDto> chapterDtos = new ArrayList<ChapterDto>();
