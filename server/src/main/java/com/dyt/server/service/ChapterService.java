@@ -3,8 +3,10 @@ package com.dyt.server.service;
 import com.dyt.server.domain.Chapter;
 import com.dyt.server.domain.ChapterExample;
 import com.dyt.server.dto.ChapterDto;
+import com.dyt.server.dto.PageDto;
 import com.dyt.server.mapper.ChapterMapper;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,13 @@ public class ChapterService {
     private ChapterMapper chapterMapper;
 
 
-    public List<ChapterDto> list() {
-        PageHelper.startPage(2, 1);
+    public void list(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         ChapterExample chapterExample = new ChapterExample();
         List<Chapter> chapters = chapterMapper.selectByExample(chapterExample);
+
+        PageInfo<Chapter> pageInfo = new PageInfo<>(chapters);
+        pageDto.setTotal(pageInfo.getTotal());
         List<ChapterDto> chapterDtos = new ArrayList<ChapterDto>();
 
         for (int i = 0, l = chapters.size(); i < l; i++) {
@@ -32,9 +37,8 @@ public class ChapterService {
             chapterDtos.add(chapterDto);
 
         }
+        pageDto.setList(chapterDtos);
 
-        return chapterDtos;
     }
-
 
 }
