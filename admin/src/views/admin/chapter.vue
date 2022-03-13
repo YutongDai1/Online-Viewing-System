@@ -94,7 +94,7 @@
       list() {
 
         let _this = this;
-        _this.$ajax.get('http://127.0.0.1:7002/business/admin/chapter/list').then((response) => {
+        _this.$ajax.get('http://127.0.0.1:7000/business/admin/chapter/list').then((response) => {
           console.log("查询大章列表结果：", response);
           _this.chapters = response.data;
 
