@@ -3,6 +3,7 @@ package com.dyt.business.controller.admin;
 import com.dyt.server.domain.Chapter;
 import com.dyt.server.dto.ChapterDto;
 import com.dyt.server.dto.PageDto;
+import com.dyt.server.dto.ResponseDto;
 import com.dyt.server.service.ChapterService;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,17 +24,22 @@ public class ChapterController {
     private ChapterService chapterService;
 
     @RequestMapping("/list")
-    public PageDto list(@RequestBody PageDto pageDto) {
+    public ResponseDto list(@RequestBody PageDto pageDto) {
         LOG.info("pageDto:{}", pageDto);
+        ResponseDto responseDto = new ResponseDto();
+
         chapterService.list(pageDto);
-        return pageDto;
+        responseDto.setContent(pageDto);
+        return responseDto;
     }
 
     @RequestMapping("/save")
-    public ChapterDto save(@RequestBody ChapterDto chapterDto) {
+    public ResponseDto save(@RequestBody ChapterDto chapterDto) {
         LOG.info("chapterDto:{}", chapterDto);
+        ResponseDto responseDto = new ResponseDto();
         chapterService.save(chapterDto);
-        return chapterDto;
+        responseDto.setContent(chapterDto);
+        return responseDto;
     }
 
 }
