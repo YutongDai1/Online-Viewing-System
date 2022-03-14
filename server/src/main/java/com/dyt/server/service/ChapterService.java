@@ -5,6 +5,7 @@ import com.dyt.server.domain.ChapterExample;
 import com.dyt.server.dto.ChapterDto;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.mapper.ChapterMapper;
+import com.dyt.server.util.CopyUtil;
 import com.dyt.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,15 +30,8 @@ public class ChapterService {
 
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapters);
         pageDto.setTotal(pageInfo.getTotal());
-        List<ChapterDto> chapterDtos = new ArrayList<ChapterDto>();
+        List<ChapterDto> chapterDtos = CopyUtil.copyList(chapters, ChapterDto.class);
 
-        for (int i = 0, l = chapters.size(); i < l; i++) {
-            Chapter chapter = chapters.get(i);
-            ChapterDto chapterDto = new ChapterDto();
-            BeanUtils.copyProperties(chapter, chapterDto);
-            chapterDtos.add(chapterDto);
-
-        }
         pageDto.setList(chapterDtos);
 
     }
