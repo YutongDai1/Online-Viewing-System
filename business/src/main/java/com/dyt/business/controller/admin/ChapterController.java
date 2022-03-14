@@ -29,4 +29,11 @@ public class ChapterController {
         return pageDto;
     }
 
+    @RequestMapping("/save")
+    public ChapterDto save(@RequestBody ChapterDto chapterDto) {
+        LOG.info("chapterDto:{}", chapterDto);
+        chapterService.save(chapterDto);
+        return chapterDto;
+    }
+
 }
