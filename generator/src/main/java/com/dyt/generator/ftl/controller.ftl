@@ -1,4 +1,4 @@
-package com.dyt.business.controller.admin;
+package com.dyt.${module}.controller.admin;
 
 import com.dyt.server.domain.${Domain};
 import com.dyt.server.dto.${Domain}Dto;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ${Domain}Controller {
 
 private static final Logger LOG = LoggerFactory.getLogger(${Domain}Controller.class);
-public static final String BUSINESS_NAME = "大章";
+public static final String BUSINESS_NAME = "${tableNameCn}";
 
 @Resource
 private ${Domain}Service ${domain}Service;
