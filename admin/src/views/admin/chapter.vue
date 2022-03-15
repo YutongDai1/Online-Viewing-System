@@ -207,8 +207,6 @@
           return;
         }
 
-
-
         Loading.show();
         _this.$ajax.post('http://127.0.0.1:7000/business/admin/chapter/save', _this.chapter).then((response) => {
           Loading.hide();
@@ -218,6 +216,8 @@
             $("#form-modal").modal("hide");
             _this.list(1);
             Toast.success("保存成功");
+          } else {
+            Toast.warning(resp.message);
           }
         })
       }
