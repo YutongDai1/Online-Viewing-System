@@ -43,6 +43,30 @@ insert into chapter (id, course_id, name)
 values ('00000016', '00000000', '测试大章16');
 
 
+-- 小节
+drop table if exists `section`;
+create table `section`
+(
+    `id`         CHAR(8)     not null default '' COMMENT 'ID',
+    `title`      varchar(50) not null COMMENT '标题',
+    `course_id`  char(8) COMMENT '课程|course.id',
+    `chapter_id` char(8) COMMENT '大章|chapter.id',
+    `video`      VARCHAR(200) COMMENT '视频',
+    `time`       INT COMMENT '时长|单位秒',
+    `charge`     CHAR(1) COMMENT '收费|C 收费；F 免费',
+    `sort`       INT COMMENT '顺序',
+    `created_at` DATETIME(3) COMMENT '创建时间',
+    `updated_at` DATETIME(3) COMMENT '修改时间',
+    primary key (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='小节';
+insert into section (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
+values ('00000001', '测试小节01', '00000001', '00000000', '', 500, 'F', 1, now(), now());
+
+
+
+
+
 drop table if exists `test`;
 create table `test` (
   `id` char(8) not null default '' comment 'id',
