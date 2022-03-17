@@ -14,27 +14,16 @@
     <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
-
       <tr>
         <th>ID</th>
-
         <th>标题</th>
-
         <th>课程</th>
-
         <th>大章</th>
-
         <th>视频</th>
-
         <th>时长</th>
-
         <th>收费</th>
-
         <th>顺序</th>
 
-        <th>创建时间</th>
-
-        <th>修改时间</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -49,8 +38,6 @@
         <td>{{section.time}}</td>
         <td>{{section.charge}}</td>
         <td>{{section.sort}}</td>
-        <td>{{section.createdAt}}</td>
-        <td>{{section.updatedAt}}</td>
         <td>
           <div class="hidden-sm hidden-xs btn-group">
             <button v-on:click="edit(section)" class="btn btn-xs btn-info">
@@ -112,12 +99,6 @@
           <div class="modal-body">
             <form class="form-horizontal">
               <div class="form-group">
-                <label class="col-sm-2 control-label">ID</label>
-                <div class="col-sm-10">
-                  <input v-model="section.id" class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
                 <label class="col-sm-2 control-label">标题</label>
                 <div class="col-sm-10">
                   <input v-model="section.title" class="form-control">
@@ -159,18 +140,6 @@
                   <input v-model="section.sort" class="form-control">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">创建时间</label>
-                <div class="col-sm-10">
-                  <input v-model="section.createdAt" class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">修改时间</label>
-                <div class="col-sm-10">
-                  <input v-model="section.updatedAt" class="form-control">
-                </div>
-              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -192,9 +161,7 @@
     name: 'section',
     data: function () {
       return {
-        section:
-          {}
-        ,
+        section: {},
         sections: []
       }
     },
