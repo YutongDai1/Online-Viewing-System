@@ -29,6 +29,11 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dyt</groupId>
+            <artifactId>server</artifactId>
+        </dependency>
+
     </dependencies>
 
 
