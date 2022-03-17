@@ -63,7 +63,8 @@
 
           <div class="hidden-md hidden-lg">
             <div class="inline pos-rel">
-              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"
+                      data-position="auto">
                 <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
               </button>
 
@@ -191,7 +192,9 @@
     name: 'section',
     data: function () {
       return {
-        section: {},
+        section:
+          {}
+        ,
         sections: []
       }
     },
@@ -264,8 +267,15 @@
       save(page) {
         let _this = this;
 
-        //保存校验
 
+        // 保存校验
+        if (1 != 1
+          || !Validator.require(_this.section.title, "标题")
+          || !Validator.length(_this.section.title, "标题", 1, 50)
+          || !Validator.length(_this.section.video, "视频", 1, 200)
+        ) {
+          return;
+        }
 
         Loading.show();
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/section/save', _this.section).then((response) => {
