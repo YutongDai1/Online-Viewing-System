@@ -3,7 +3,7 @@ package com.dyt.server.service;
 import com.dyt.server.domain.Section;
 import com.dyt.server.domain.SectionExample;
 import com.dyt.server.dto.SectionDto;
-import com.dyt.server.dto.PageDto;
+import com.dyt.server.dto.SectionPageDto;
 import com.dyt.server.mapper.SectionMapper;
 import com.dyt.server.util.CopyUtil;
 import com.dyt.server.util.UuidUtil;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,16 +25,23 @@ public class SectionService {
     /**
      * 列表查询
      */
-    public void list(PageDto pageDto) {
-        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+    public void list(SectionPageDto sectionPageDto) {
+        PageHelper.startPage(sectionPageDto.getPage(), sectionPageDto.getSize());
         SectionExample sectionExample = new SectionExample();
+        SectionExample.Criteria criteria = sectionExample.createCriteria();
+        if (!StringUtils.isEmpty(sectionPageDto.getCourseId())) {
+            criteria.andCourseIdEqualTo(sectionPageDto.getCourseId());
+        }
+        if (!StringUtils.isEmpty(sectionPageDto.getChapterId())) {
+            criteria.andChapterIdEqualTo(sectionPageDto.getChapterId());
+        }
+        sectionExample.setOrderByClause("sort asc");
         List<Section> sections = sectionMapper.selectByExample(sectionExample);
-
         PageInfo<Section> pageInfo = new PageInfo<>(sections);
-        pageDto.setTotal(pageInfo.getTotal());
+        sectionPageDto.setTotal(pageInfo.getTotal());
         List<SectionDto> sectionDtos = CopyUtil.copyList(sections, SectionDto.class);
 
-        pageDto.setList(sectionDtos);
+        sectionPageDto.setList(sectionDtos);
 
     }
 
