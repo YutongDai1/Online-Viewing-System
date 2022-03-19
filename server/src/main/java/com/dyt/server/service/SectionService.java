@@ -20,6 +20,9 @@ import java.util.List;
 public class SectionService {
 
     @Resource
+    private CourseService courseService;
+
+    @Resource
     private SectionMapper sectionMapper;
 
     /**
@@ -56,6 +59,7 @@ public class SectionService {
         } else {
             this.update(section);
         }
+        courseService.updateTime(sectionDto.getCourseId());
     }
 
     /**

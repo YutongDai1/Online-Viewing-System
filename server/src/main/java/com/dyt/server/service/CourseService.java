@@ -5,25 +5,29 @@ import com.dyt.server.domain.CourseExample;
 import com.dyt.server.dto.CourseDto;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.mapper.CourseMapper;
+import com.dyt.server.mapper.my.MyCourseMapper;
 import com.dyt.server.util.CopyUtil;
 import com.dyt.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CourseService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(CourseService.class);
     @Resource
     private CourseMapper courseMapper;
+    @Resource
+    private MyCourseMapper myCourseMapper;
 
     /**
      * 列表查询
@@ -83,6 +87,17 @@ public class CourseService {
      */
     public void delete(String id) {
         courseMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 更新课程时长
+     *
+     * @param courseId
+     * @return
+     */
+    public void updateTime(String courseId) {
+        LOG.info("更新课程时长：{}", courseId);
+        myCourseMapper.updateTime(courseId);
     }
 
 
