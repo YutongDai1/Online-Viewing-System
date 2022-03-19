@@ -3,7 +3,7 @@ package com.dyt.server.service;
 import com.dyt.server.domain.Chapter;
 import com.dyt.server.domain.ChapterExample;
 import com.dyt.server.dto.ChapterDto;
-import com.dyt.server.dto.PageDto;
+import com.dyt.server.dto.ChapterPageDto;
 import com.dyt.server.mapper.ChapterMapper;
 import com.dyt.server.util.CopyUtil;
 import com.dyt.server.util.UuidUtil;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,16 +25,22 @@ public class ChapterService {
     /**
      * 列表查询
      */
-    public void list(PageDto pageDto) {
-        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+    public void list(ChapterPageDto chapterPageDto) {
+        PageHelper.startPage(chapterPageDto.getPage(), chapterPageDto.getSize());
         ChapterExample chapterExample = new ChapterExample();
+
+        //按照courseId去查
+        ChapterExample.Criteria criteria = chapterExample.createCriteria();
+        if (!StringUtils.isEmpty(chapterPageDto.getCourseId())) {
+            criteria.andCourseIdEqualTo(chapterPageDto.getCourseId());
+        }
         List<Chapter> chapters = chapterMapper.selectByExample(chapterExample);
 
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapters);
-        pageDto.setTotal(pageInfo.getTotal());
+        chapterPageDto.setTotal(pageInfo.getTotal());
         List<ChapterDto> chapterDtos = CopyUtil.copyList(chapters, ChapterDto.class);
 
-        pageDto.setList(chapterDtos);
+        chapterPageDto.setList(chapterDtos);
 
     }
 

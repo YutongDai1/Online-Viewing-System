@@ -8,9 +8,9 @@ create table `chapter`(
 
 
 insert into chapter (id, course_id, name)
-values ('00000000', '00000000', '测试大章00');
+values ('00000000', '00000001', '测试大章00');
 insert into chapter (id, course_id, name)
-values ('00000001', '00000000', '测试大章01');
+values ('00000001', '00000001', '测试大章01');
 insert into chapter (id, course_id, name)
 values ('00000002', '00000000', '测试大章02');
 insert into chapter (id, course_id, name)

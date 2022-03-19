@@ -1,18 +1,15 @@
 package com.dyt.business.controller.admin;
 
-import com.dyt.server.domain.Chapter;
 import com.dyt.server.dto.ChapterDto;
-import com.dyt.server.dto.PageDto;
+import com.dyt.server.dto.ChapterPageDto;
 import com.dyt.server.dto.ResponseDto;
-import com.dyt.server.exception.ValidatorException;
 import com.dyt.server.service.ChapterService;
 import com.dyt.server.util.ValidatorUtil;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
-import java.util.List;
 
 
 @RestController
@@ -29,11 +26,12 @@ public class ChapterController {
      * 列表查询
      */
     @PostMapping("/list")
-    public ResponseDto list(@RequestBody PageDto pageDto) {
+    public ResponseDto list(@RequestBody ChapterPageDto chapterPageDto) {
         ResponseDto responseDto = new ResponseDto();
 
-        chapterService.list(pageDto);
-        responseDto.setContent(pageDto);
+        ValidatorUtil.require(chapterPageDto.getCourseId(), "课程ID");
+        chapterService.list(chapterPageDto);
+        responseDto.setContent(chapterPageDto);
         return responseDto;
     }
 
