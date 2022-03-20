@@ -218,7 +218,7 @@
       /**
        * 点击【保存】
        */
-      save(page) {
+      save() {
         let _this = this;
 
 

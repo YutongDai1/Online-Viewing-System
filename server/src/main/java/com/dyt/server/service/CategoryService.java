@@ -26,6 +26,17 @@ public class CategoryService {
     /**
      * 列表查询
      */
+    public List<CategoryDto> all() {
+        CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        List<CategoryDto> categoryDtoList = CopyUtil.copyList(categoryList, CategoryDto.class);
+        return categoryDtoList;
+    }
+
+    /**
+     * 列表查询
+     */
     public void list(PageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         CategoryExample categoryExample = new CategoryExample();
@@ -35,8 +46,7 @@ public class CategoryService {
 
         PageInfo<Category> pageInfo = new PageInfo<>(categorys);
         pageDto.setTotal(pageInfo.getTotal());
-        List
-                <CategoryDto> categoryDtos = CopyUtil.copyList(categorys, CategoryDto.class);
+        List<CategoryDto> categoryDtos = CopyUtil.copyList(categorys, CategoryDto.class);
 
         pageDto.setList(categoryDtos);
 
