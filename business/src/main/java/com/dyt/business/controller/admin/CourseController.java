@@ -1,9 +1,6 @@
 package com.dyt.business.controller.admin;
 
-import com.dyt.server.dto.CourseCategoryDto;
-import com.dyt.server.dto.CourseDto;
-import com.dyt.server.dto.PageDto;
-import com.dyt.server.dto.ResponseDto;
+import com.dyt.server.dto.*;
 import com.dyt.server.service.CourseCategoryService;
 import com.dyt.server.service.CourseService;
 import com.dyt.server.util.ValidatorUtil;
@@ -79,6 +76,21 @@ public class CourseController {
         ResponseDto responseDto = new ResponseDto();
         List<CourseCategoryDto> dtoList = courseCategoryService.listByCourse(courseId);
         responseDto.setContent(dtoList);
+        return responseDto;
+    }
+
+    @GetMapping("/find-content/{id}")
+    public ResponseDto findContent(@PathVariable String id) {
+        ResponseDto responseDto = new ResponseDto();
+        CourseContentDto contentDto = courseService.findContent(id);
+        responseDto.setContent(contentDto);
+        return responseDto;
+    }
+
+    @PostMapping("/save-content")
+    public ResponseDto saveContent(@RequestBody CourseContentDto contentDto) {
+        ResponseDto responseDto = new ResponseDto();
+        courseService.saveContent(contentDto);
         return responseDto;
     }
 
