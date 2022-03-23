@@ -3,18 +3,16 @@ package com.dyt.generator.server;
 import com.dyt.generator.util.DbUtil;
 import com.dyt.generator.util.Field;
 import com.dyt.generator.util.FreemarkerUtil;
-import freemarker.template.TemplateException;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class ServerGenerator {
 
-    static String Module = "business";
+    static String Module = "file";
     static String toServicePath = "server\\src\\main\\java\\com\\dyt\\server\\service\\";
     static String toDtoPath = "server\\src\\main\\java\\com\\dyt\\server\\dto\\";
     static String toControllerPath = Module + "\\src\\main\\java\\com\\dyt\\" + Module + "\\controller\\admin\\";
