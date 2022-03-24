@@ -232,6 +232,19 @@ create table `teacher`
 ) engine = innodb
   default charset = utf8mb4 comment ='讲师';
 
+-- 课程内容文件
+drop table if exists `course_content_file`;
+create table `course_content_file`
+(
+    `id`        char(8) not null default '' comment 'id',
+    `course_id` char(8) not null comment '课程id',
+    `url`       varchar(100) comment '地址',
+    `name`      varchar(100) comment '文件名',
+    `size`      int comment '大小|字节b',
+    primary key (`id`)
+) engine = innodb
+  default charset = utf8mb4 comment ='课程内容文件';
+
 -- 文件
 drop table if exists `file`;
 create table `file`
@@ -249,12 +262,15 @@ create table `file`
 ) engine = innodb
   default charset = utf8mb4 comment ='文件';
 
+
+
 drop table if exists `test`;
 create table `test` (
   `id` char(8) not null default '' comment 'id',
   `name` varchar(50) comment '名称',
   primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='测试';
+
 
 insert into `test` (id, name) values (1, '测试');
 insert into `test` (id, name) values (2, '测试2');
