@@ -67,10 +67,17 @@
         let start = shardIndex * shardSize;	//当前分片起始位置
         let end = Math.min(file.size, start + shardSize); //当前分片结束位置
         let fileShard = file.slice(start, end); //从文件中截取当前的分片数据
-
-        // key："file"必须和后端controller参数名一致
-        formData.append('file', fileShard);
+        let size = file.size;
+        let shardTotal = Math.ceil(size / shardSize); //总片数
+        // key："shard"必须和后端controller参数名一致
+        formData.append('shard', fileShard);
+        formData.append('shardIndex', shardIndex);
+        formData.append('shardSize', shardSize);
+        formData.append('shardTotal', shardTotal);
         formData.append('use', _this.use);
+        formData.append('name', file.name);
+        formData.append('suffix', suffix);
+        formData.append('size', size);
         Loading.show();
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/admin/upload', formData).then((response) => {
           Loading.hide();
