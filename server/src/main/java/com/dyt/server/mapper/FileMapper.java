@@ -2,9 +2,7 @@ package com.dyt.server.mapper;
 
 import com.dyt.server.domain.File;
 import com.dyt.server.domain.FileExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface FileMapper {
