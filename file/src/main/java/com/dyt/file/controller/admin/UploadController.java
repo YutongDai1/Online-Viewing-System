@@ -57,7 +57,15 @@ public class UploadController {
             fullDir.mkdir();
         }
 
-        String path = dir + File.separator + key + "." + suffix;
+        String path = new StringBuffer(dir)
+                .append(File.separator)
+                .append(key)
+                .append(".")
+                .append(suffix)
+                .append(".")
+                .append(fileDto.getShardIndex())
+                .toString();
+
         String fullPath = FILE_PATH + path;
 
 
