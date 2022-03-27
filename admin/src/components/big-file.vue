@@ -43,7 +43,7 @@
 
         let file = _this.$refs.file.files[0];
 
-        console.log(file);
+        console.log(JSON.stringify(file));
         /*
           name: "test.mp4"
           lastModified: 1901173357457
@@ -54,10 +54,11 @@
         */
 
         // 生成文件标识，标识多次上传的是不是同一个文件
-        let key = hex_md5(file);
+        let key = hex_md5(file.name + file.size + file.type);
         let key10 = parseInt(key, 16);
         let key62 = Tool._10to62(key10);
         console.log(key, key10, key62);
+        console.log(hex_md5(Array()));
         /*
           d41d8cd98f00b204e9800998ecf8427e
           2.8194976848941264e+38
