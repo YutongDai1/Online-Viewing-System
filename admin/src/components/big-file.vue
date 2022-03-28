@@ -152,7 +152,7 @@
 
           param.shard = base64;
 
-          _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/admin/upload', param).then((response) => {
+          _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/admin/oss-append', param).then((response) => {
             let resp = response.data;
             console.log("上传文件成功：", resp);
             Progress.show(parseInt(shardIndex * 100 / shardTotal));
