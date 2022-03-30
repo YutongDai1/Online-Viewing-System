@@ -274,6 +274,12 @@ alter table `file`
     add unique key key_unique (`key`);
 
 
+ALTER TABLE `section`
+    ADD COLUMN (
+        `vod` CHAR(32) COMMENT 'VOD|阿里云VOD'
+        );
+
+
 drop table if exists `test`;
 create table `test` (
   `id` char(8) not null default '' comment 'id',

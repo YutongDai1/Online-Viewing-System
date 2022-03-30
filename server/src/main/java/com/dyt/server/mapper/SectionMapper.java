@@ -2,10 +2,9 @@ package com.dyt.server.mapper;
 
 import com.dyt.server.domain.Section;
 import com.dyt.server.domain.SectionExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface SectionMapper {
     long countByExample(SectionExample example);
