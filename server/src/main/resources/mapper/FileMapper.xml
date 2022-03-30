@@ -2,18 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dyt.server.mapper.FileMapper">
   <resultMap id="BaseResultMap" type="com.dyt.server.domain.File">
-    <id column="id" jdbcType="CHAR" property="id"/>
-    <result column="path" jdbcType="VARCHAR" property="path"/>
-    <result column="name" jdbcType="VARCHAR" property="name"/>
-    <result column="suffix" jdbcType="VARCHAR" property="suffix"/>
-    <result column="size" jdbcType="INTEGER" property="size"/>
-    <result column="use" jdbcType="CHAR" property="use"/>
-    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
-    <result column="shard_index" jdbcType="INTEGER" property="shardIndex"/>
-    <result column="shard_size" jdbcType="INTEGER" property="shardSize"/>
-    <result column="shard_total" jdbcType="INTEGER" property="shardTotal"/>
-    <result column="key" jdbcType="VARCHAR" property="key"/>
+      <id column="id" jdbcType="CHAR" property="id"/>
+      <result column="path" jdbcType="VARCHAR" property="path"/>
+      <result column="name" jdbcType="VARCHAR" property="name"/>
+      <result column="suffix" jdbcType="VARCHAR" property="suffix"/>
+      <result column="size" jdbcType="INTEGER" property="size"/>
+      <result column="use" jdbcType="CHAR" property="use"/>
+      <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+      <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+      <result column="shard_index" jdbcType="INTEGER" property="shardIndex"/>
+      <result column="shard_size" jdbcType="INTEGER" property="shardSize"/>
+      <result column="shard_total" jdbcType="INTEGER" property="shardTotal"/>
+      <result column="key" jdbcType="VARCHAR" property="key"/>
+      <result column="vod" jdbcType="CHAR" property="vod"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,48 +76,49 @@
   </sql>
   <sql id="Base_Column_List">
     id, `path`, `name`, suffix, `size`, `use`, created_at, updated_at, shard_index, shard_size, 
-    shard_total, `key`
+    shard_total, `key`, vod
   </sql>
   <select id="selectByExample" parameterType="com.dyt.server.domain.FileExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List"/>
+      <include refid="Base_Column_List"/>
     from file
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
+      select
+      <include refid="Base_Column_List"/>
     from file
     where id = #{id,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete
-    from file
-    where id = #{id,jdbcType=CHAR}
+      delete
+      from file
+      where id = #{id,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.dyt.server.domain.FileExample">
     delete from file
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.dyt.server.domain.File">
-    insert into file (id, `path`, `name`,
-                      suffix, `size`, `use`, created_at,
-                      updated_at, shard_index, shard_size,
-                      shard_total, `key`)
-    values (#{id,jdbcType=CHAR}, #{path,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-            #{suffix,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, #{use,jdbcType=CHAR}, #{createdAt,jdbcType=TIMESTAMP},
-            #{updatedAt,jdbcType=TIMESTAMP}, #{shardIndex,jdbcType=INTEGER}, #{shardSize,jdbcType=INTEGER},
-            #{shardTotal,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR})
+      insert into file (id, `path`, `name`,
+                        suffix, `size`, `use`, created_at,
+                        updated_at, shard_index, shard_size,
+                        shard_total, `key`, vod)
+      values (#{id,jdbcType=CHAR}, #{path,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+              #{suffix,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, #{use,jdbcType=CHAR},
+              #{createdAt,jdbcType=TIMESTAMP},
+              #{updatedAt,jdbcType=TIMESTAMP}, #{shardIndex,jdbcType=INTEGER}, #{shardSize,jdbcType=INTEGER},
+              #{shardTotal,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, #{vod,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dyt.server.domain.File">
     insert into file
@@ -157,6 +159,9 @@
       <if test="key != null">
         `key`,
       </if>
+        <if test="vod != null">
+            vod,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -195,12 +200,15 @@
       <if test="key != null">
         #{key,jdbcType=VARCHAR},
       </if>
+        <if test="vod != null">
+            #{vod,jdbcType=CHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.dyt.server.domain.FileExample" resultType="java.lang.Long">
     select count(*) from file
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -242,27 +250,31 @@
       <if test="record.key != null">
         `key` = #{record.key,jdbcType=VARCHAR},
       </if>
+        <if test="record.vod != null">
+            vod = #{record.vod,jdbcType=CHAR},
+        </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause"/>
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update file
     set id = #{record.id,jdbcType=CHAR},
-    `path` = #{record.path,jdbcType=VARCHAR},
-    `name` = #{record.name,jdbcType=VARCHAR},
-    suffix = #{record.suffix,jdbcType=VARCHAR},
-    `size` = #{record.size,jdbcType=INTEGER},
-    `use` = #{record.use,jdbcType=CHAR},
-    created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-    updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-    shard_index = #{record.shardIndex,jdbcType=INTEGER},
-    shard_size = #{record.shardSize,jdbcType=INTEGER},
-    shard_total = #{record.shardTotal,jdbcType=INTEGER},
-    `key` = #{record.key,jdbcType=VARCHAR}
+      `path` = #{record.path,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      suffix = #{record.suffix,jdbcType=VARCHAR},
+      `size` = #{record.size,jdbcType=INTEGER},
+      `use` = #{record.use,jdbcType=CHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      shard_index = #{record.shardIndex,jdbcType=INTEGER},
+      shard_size = #{record.shardSize,jdbcType=INTEGER},
+      shard_total = #{record.shardTotal,jdbcType=INTEGER},
+      `key` = #{record.key,jdbcType=VARCHAR},
+      vod = #{record.vod,jdbcType=CHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause"/>
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.dyt.server.domain.File">
@@ -301,22 +313,26 @@
       <if test="key != null">
         `key` = #{key,jdbcType=VARCHAR},
       </if>
+        <if test="vod != null">
+            vod = #{vod,jdbcType=CHAR},
+        </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dyt.server.domain.File">
-    update file
-    set `path`      = #{path,jdbcType=VARCHAR},
-        `name`      = #{name,jdbcType=VARCHAR},
-        suffix      = #{suffix,jdbcType=VARCHAR},
-        `size`      = #{size,jdbcType=INTEGER},
-        `use`       = #{use,jdbcType=CHAR},
-        created_at  = #{createdAt,jdbcType=TIMESTAMP},
-        updated_at  = #{updatedAt,jdbcType=TIMESTAMP},
-        shard_index = #{shardIndex,jdbcType=INTEGER},
-        shard_size  = #{shardSize,jdbcType=INTEGER},
-        shard_total = #{shardTotal,jdbcType=INTEGER},
-        `key`       = #{key,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=CHAR}
+      update file
+      set `path`      = #{path,jdbcType=VARCHAR},
+          `name`      = #{name,jdbcType=VARCHAR},
+          suffix      = #{suffix,jdbcType=VARCHAR},
+          `size`      = #{size,jdbcType=INTEGER},
+          `use`       = #{use,jdbcType=CHAR},
+          created_at  = #{createdAt,jdbcType=TIMESTAMP},
+          updated_at  = #{updatedAt,jdbcType=TIMESTAMP},
+          shard_index = #{shardIndex,jdbcType=INTEGER},
+          shard_size  = #{shardSize,jdbcType=INTEGER},
+          shard_total = #{shardTotal,jdbcType=INTEGER},
+          `key`       = #{key,jdbcType=VARCHAR},
+          vod         = #{vod,jdbcType=CHAR}
+      where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>

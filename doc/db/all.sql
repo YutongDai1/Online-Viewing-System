@@ -272,11 +272,12 @@ alter table `file`
     add column (`key` varchar(32) comment '文件标识');
 alter table `file`
     add unique key key_unique (`key`);
+alter table `file`
+    add column (`vod` char(32) comment 'vod|阿里云vod');
 
-
-ALTER TABLE `section`
-    ADD COLUMN (
-        `vod` CHAR(32) COMMENT 'VOD|阿里云VOD'
+alter table `section`
+    add column (
+        `vod` char(32) comment 'vod|阿里云vod'
         );
 
 
