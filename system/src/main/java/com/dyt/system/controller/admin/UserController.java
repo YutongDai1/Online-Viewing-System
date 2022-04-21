@@ -1,5 +1,6 @@
 package com.dyt.system.controller.admin;
 
+import com.dyt.server.dto.LoginUserDto;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.dto.ResponseDto;
 import com.dyt.server.dto.UserDto;
@@ -75,5 +76,20 @@ public class UserController {
         responseDto.setContent(userDto);
         return responseDto;
     }
+
+    /**
+     * 重置密码
+     */
+    @PostMapping("/login")
+    public ResponseDto login(@RequestBody UserDto userDto) {
+        userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
+        ResponseDto responseDto = new ResponseDto();
+        LoginUserDto loginUserDto = userService.login(userDto);
+        responseDto.setContent(loginUserDto);
+        return responseDto;
+    }
+
+
+
 
 }
