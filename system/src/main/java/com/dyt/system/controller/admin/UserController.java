@@ -1,9 +1,6 @@
 package com.dyt.system.controller.admin;
 
-import com.dyt.server.dto.LoginUserDto;
-import com.dyt.server.dto.PageDto;
-import com.dyt.server.dto.ResponseDto;
-import com.dyt.server.dto.UserDto;
+import com.dyt.server.dto.*;
 import com.dyt.server.service.UserService;
 import com.dyt.server.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -12,6 +9,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -81,15 +79,24 @@ public class UserController {
      * 重置密码
      */
     @PostMapping("/login")
-    public ResponseDto login(@RequestBody UserDto userDto) {
+    public ResponseDto login(@RequestBody UserDto userDto, HttpServletRequest request) {
         userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
         ResponseDto responseDto = new ResponseDto();
         LoginUserDto loginUserDto = userService.login(userDto);
+        request.getSession().setAttribute(Constants.LOGIN_USER, loginUserDto);
         responseDto.setContent(loginUserDto);
         return responseDto;
     }
 
-
+    /**
+     * 退出登录
+     */
+    @GetMapping("/logout")
+    public ResponseDto logout(HttpServletRequest request) {
+        ResponseDto responseDto = new ResponseDto();
+        request.getSession().removeAttribute(Constants.LOGIN_USER);
+        return responseDto;
+    }
 
 
 }
