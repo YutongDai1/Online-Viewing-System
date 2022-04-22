@@ -44,7 +44,7 @@
                                               <label class="block clearfix">
                           <span class="block input-icon input-icon-right">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="验证码">
+                              <input v-model="user.imageCode" type="text" class="form-control" placeholder="验证码">
                               <span class="input-group-addon" id="basic-addon2">
                                 <img v-on:click="loadImageCode()" id="image-code" alt="验证码"/>
                               </span>
@@ -99,7 +99,8 @@
             return {
                 user:
                   {},
-              remember: true // 默认勾选记住我
+              remember: true, // 默认勾选记住我
+              imageCodeToken: ""
             }
         },
         mounted:function()
@@ -131,6 +132,7 @@
                 if (md5 !== rememberUser.md5) {
                     _this.user.password = hex_md5(_this.user.password + KEY);
                 }
+              _this.user.imageCodeToken = _this.imageCodeToken;
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
                     Loading.hide();
@@ -160,7 +162,9 @@
                       }
                         _this.$router.push("/welcome")
                     } else {
-                        Toast.warning(resp.message)
+                      Toast.warning(resp.message);
+                      _this.user.password = "";
+                      _this.loadImageCode();
                     }
                 });
             },
