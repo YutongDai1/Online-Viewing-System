@@ -1,19 +1,15 @@
 package com.dyt.system.controller.admin;
 
-import com.dyt.server.domain.Role;
-import com.dyt.server.dto.RoleDto;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.dto.ResponseDto;
-import com.dyt.server.exception.ValidatorException;
+import com.dyt.server.dto.RoleDto;
 import com.dyt.server.service.RoleService;
 import com.dyt.server.util.ValidatorUtil;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 
 @RestController
@@ -66,5 +62,21 @@ public class RoleController {
         roleService.delete(id);
         return responseDto;
     }
+
+
+    /**
+     * 保存资源
+     *
+     * @param roleDto
+     */
+    @PostMapping("/save-resource")
+    public ResponseDto saveResource(@RequestBody RoleDto roleDto) {
+        LOG.info("保存角色资源关联开始");
+        ResponseDto<RoleDto> responseDto = new ResponseDto<RoleDto>();
+        roleService.saveResource(roleDto);
+        responseDto.setContent(roleDto);
+        return responseDto;
+    }
+
 
 }
