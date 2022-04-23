@@ -3,7 +3,6 @@ package com.dyt.system.controller.admin;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.dto.ResponseDto;
 import com.dyt.server.dto.RoleDto;
-import com.dyt.server.dto.UserDto;
 import com.dyt.server.service.RoleService;
 import com.dyt.server.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -107,6 +106,20 @@ public class RoleController {
 
         return responseDto;
 
+    }
+
+    /**
+     * 加载用户
+     *
+     * @param roleId
+     */
+    @GetMapping("/list-user/{roleId}")
+    public ResponseDto listUser(@PathVariable String roleId) {
+        LOG.info("加载用户开始");
+        ResponseDto responseDto = new ResponseDto<>();
+        List<String> userIdList = roleService.listUser(roleId);
+        responseDto.setContent(userIdList);
+        return responseDto;
     }
 
 
