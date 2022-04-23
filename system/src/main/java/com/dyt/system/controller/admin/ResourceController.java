@@ -1,7 +1,6 @@
 package com.dyt.system.controller.admin;
 
 import com.dyt.server.dto.PageDto;
-import com.dyt.server.dto.ResourceDto;
 import com.dyt.server.dto.ResponseDto;
 import com.dyt.server.service.ResourceService;
 import com.dyt.server.util.ValidatorUtil;
@@ -38,18 +37,15 @@ public class ResourceController {
      * 保存，id有值时更新，无值时新增
      */
     @PostMapping("/save")
-    public ResponseDto save(@RequestBody ResourceDto resourceDto) {
+    public ResponseDto save(@RequestBody String jsonStr) {
 
 // 保存校验
-        ValidatorUtil.require(resourceDto.getName(), "名称");
-        ValidatorUtil.length(resourceDto.getName(), "名称", 1, 100);
-        ValidatorUtil.length(resourceDto.getPage(), "页面", 1, 50);
-        ValidatorUtil.length(resourceDto.getRequest(), "请求", 1, 200);
+
+        ValidatorUtil.require(jsonStr, "资源");
 
 
         ResponseDto responseDto = new ResponseDto();
-        resourceService.save(resourceDto);
-        responseDto.setContent(resourceDto);
+        resourceService.saveJson(jsonStr);
         return responseDto;
     }
 
