@@ -52,7 +52,7 @@
         <!--table tableName="file" domainObjectName="File"/-->
         <!--table tableName="file" domainObjectName="File"/-->
         <!--table tableName="user" domainObjectName="User"/-->
-        <table tableName="resource" domainObjectName="Resource"/>
+        <table tableName="role" domainObjectName="Role"/>
 
     </context>
 </generatorConfiguration>
