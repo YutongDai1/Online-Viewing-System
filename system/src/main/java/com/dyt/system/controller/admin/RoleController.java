@@ -3,6 +3,7 @@ package com.dyt.system.controller.admin;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.dto.ResponseDto;
 import com.dyt.server.dto.RoleDto;
+import com.dyt.server.dto.UserDto;
 import com.dyt.server.service.RoleService;
 import com.dyt.server.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -90,6 +91,22 @@ public class RoleController {
         List<String> resourceIdList = roleService.listResource(roleId);
         responseDto.setContent(resourceIdList);
         return responseDto;
+    }
+
+    /**
+     * 保存用户
+     *
+     * @param roleDto
+     */
+    @PostMapping("/save-user")
+    public ResponseDto saveUser(@RequestBody RoleDto roleDto) {
+        LOG.info("保存角色用户关联开始");
+        ResponseDto<RoleDto> responseDto = new ResponseDto<>();
+        roleService.saveUser(roleDto);
+        responseDto.setContent(roleDto);
+
+        return responseDto;
+
     }
 
 

@@ -20,7 +20,7 @@ public class RoleDto {
      */
     private String desc;
     private List<String> resourceIds;
-
+    private List<String> userIds;
 
     public String getId() {
         return id;
@@ -54,6 +54,14 @@ public class RoleDto {
         this.resourceIds = resourceIds;
     }
 
+    public List<String> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("RoleDto{");
@@ -61,8 +69,8 @@ public class RoleDto {
         sb.append(", name='").append(name).append('\'');
         sb.append(", desc='").append(desc).append('\'');
         sb.append(", resourceIds=").append(resourceIds);
+        sb.append(", userIds=").append(userIds);
         sb.append('}');
         return sb.toString();
     }
-
 }
