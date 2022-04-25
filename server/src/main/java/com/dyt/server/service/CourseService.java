@@ -7,6 +7,7 @@ import com.dyt.server.dto.CourseContentDto;
 import com.dyt.server.dto.CourseDto;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.dto.SortDto;
+import com.dyt.server.enums.CourseStatusEnum;
 import com.dyt.server.mapper.CourseContentMapper;
 import com.dyt.server.mapper.CourseMapper;
 import com.dyt.server.mapper.my.MyCourseMapper;
@@ -57,6 +58,18 @@ public class CourseService {
 
         pageDto.setList(courseDtos);
 
+    }
+
+    /**
+     * 新课列表查询，只查询已发布的，按创建日期倒序
+     */
+    public List<CourseDto> listNew(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+        CourseExample courseExample = new CourseExample();
+        courseExample.createCriteria().andStatusEqualTo(CourseStatusEnum.PUBLISH.getCode());
+        courseExample.setOrderByClause("created_at desc");
+        List<Course> courseList = courseMapper.selectByExample(courseExample);
+        return CopyUtil.copyList(courseList, CourseDto.class);
     }
 
     /**
