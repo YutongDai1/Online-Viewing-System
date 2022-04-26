@@ -3,10 +3,7 @@ package com.dyt.server.service;
 import com.dyt.server.domain.Course;
 import com.dyt.server.domain.CourseContent;
 import com.dyt.server.domain.CourseExample;
-import com.dyt.server.dto.CourseContentDto;
-import com.dyt.server.dto.CourseDto;
-import com.dyt.server.dto.PageDto;
-import com.dyt.server.dto.SortDto;
+import com.dyt.server.dto.*;
 import com.dyt.server.enums.CourseStatusEnum;
 import com.dyt.server.mapper.CourseContentMapper;
 import com.dyt.server.mapper.CourseMapper;
@@ -44,10 +41,13 @@ public class CourseService {
     /**
      * 列表查询
      */
-    public void list(PageDto pageDto) {
+    public void list(CoursePageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         CourseExample courseExample = new CourseExample();
-
+        CourseExample.Criteria criteria = courseExample.createCriteria();
+        if (!StringUtils.isEmpty(pageDto.getStatus())) {
+            criteria.andStatusEqualTo(pageDto.getStatus());
+        }
         courseExample.setOrderByClause("sort asc");
         List<Course> courses = courseMapper.selectByExample(courseExample);
 
