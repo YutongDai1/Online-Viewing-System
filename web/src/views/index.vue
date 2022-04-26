@@ -17,22 +17,7 @@
         <div class="title1">最新上线</div>
         <div class="row">
           <div v-for="o in news" class="col-md-4">
-            <div class="card mb-4 shadow-sm course">
-              <img class="img-fluid" v-bind:src="o.image">
-              <div class="card-body">
-                <h4 class="">{{o.name}}</h4>
-                <p class="card-text">{{o.summary}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">课程详情</button>
-                  </div>
-                  <div class="text-muted">
-                    <span class="badge badge-info"><i class="fa fa-yen" aria-hidden="true"></i>&nbsp;{{o.price}}</span>&nbsp;
-                    <span class="badge badge-info"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;123</span>&nbsp;
-                  </div>
-                </div>
-              </div>
-            </div>
+            <the-course v-bind:course="o"></the-course>
           </div>
         </div>
 
@@ -41,22 +26,7 @@
         <div class="title2">好课推荐</div>
         <div class="row">
           <div v-for="o in news" class="col-md-4">
-            <div class="card mb-4 shadow-sm course">
-              <img class="img-fluid" v-bind:src="o.image">
-              <div class="card-body">
-                <h4 class="">{{o.name}}</h4>
-                <p class="card-text">{{o.summary}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">课程详情</button>
-                  </div>
-                  <div class="text-muted">
-                    <span class="badge badge-info"><i class="fa fa-yen" aria-hidden="true"></i>&nbsp;{{o.price}}</span>&nbsp;
-                    <span class="badge badge-info"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;123</span>&nbsp;
-                  </div>
-                </div>
-              </div>
-            </div>
+            <the-course v-bind:course="o"></the-course>
           </div>
         </div>
       </div>
@@ -65,9 +35,10 @@
 </template>
 
 <script>
-
+  import TheCourse from "../components/the-course";
   export default {
     name: 'index',
+    components: {TheCourse},
     data: function () {
       return {
         news: [],
@@ -115,12 +86,5 @@
     font-size: 2rem;
   }
 
-  .course h4 {
-    font-size: 1.25rem;
-    margin: 15px 0;
-  }
 
-  .course .text-muted .badge {
-    font-size: 1rem;
-  }
 </style>
