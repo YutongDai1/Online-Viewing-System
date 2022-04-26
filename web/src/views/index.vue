@@ -8,7 +8,7 @@
           综艺电视剧电影纪录片应有尽有
         </p>
         <p>
-          <a href="#" class="btn btn-primary my-2 p-3 font-weight-bold">点击进入</a>
+          <router-link to="/list" class="btn btn-primary my-2 p-3 font-weight-bold">点击进入</router-link>
         </p>
       </div>
     </section>
