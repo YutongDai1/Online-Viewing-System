@@ -14,10 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -64,6 +62,7 @@ public class MemberService {
         Date now = new Date();
 
         member.setId(UuidUtil.getShortUuid());
+        member.setRegisterTime(now);
         memberMapper.insert(member);
     }
 
