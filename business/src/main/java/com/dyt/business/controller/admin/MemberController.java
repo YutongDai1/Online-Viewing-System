@@ -1,19 +1,16 @@
 package com.dyt.business.controller.admin;
 
-import com.dyt.server.domain.Member;
-import com.dyt.server.dto.MemberDto;
 import com.dyt.server.dto.PageDto;
 import com.dyt.server.dto.ResponseDto;
-import com.dyt.server.exception.ValidatorException;
 import com.dyt.server.service.MemberService;
-import com.dyt.server.util.ValidatorUtil;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 
 @RestController
@@ -38,33 +35,6 @@ public class MemberController {
         return responseDto;
     }
 
-    /**
-     * 保存，id有值时更新，无值时新增
-     */
-    @PostMapping("/save")
-    public ResponseDto save(@RequestBody MemberDto memberDto) {
 
-// 保存校验
-        ValidatorUtil.length(memberDto.getMobile(), "手机号", 1, 11);
-        ValidatorUtil.require(memberDto.getPassword(), "密码");
-        ValidatorUtil.length(memberDto.getName(), "昵称", 1, 50);
-        ValidatorUtil.length(memberDto.getPhoto(), "头像url", 1, 200);
-
-
-        ResponseDto responseDto = new ResponseDto();
-        memberService.save(memberDto);
-        responseDto.setContent(memberDto);
-        return responseDto;
-    }
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/delete/{id}")
-    public ResponseDto delete(@PathVariable String id) {
-        ResponseDto responseDto = new ResponseDto();
-        memberService.delete(id);
-        return responseDto;
-    }
 
 }
