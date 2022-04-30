@@ -12,7 +12,7 @@ import java.util.*;
 
 public class VueGenerator {
 
-    static String Module = "system";
+    static String Module = "business";
     static String toVuePath = "admin\\src\\views\\admin\\";
     static String generatorConfigPath = "server\\src\\main\\resources\\generator\\generatorConfig.xml";
 
