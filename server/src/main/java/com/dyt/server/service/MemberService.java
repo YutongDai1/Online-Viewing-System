@@ -129,4 +129,15 @@ public class MemberService {
             }
         }
     }
+
+    /**
+     * 按手机号查找
+     *
+     * @param mobile
+     * @return
+     */
+    public MemberDto findByMobile(String mobile) {
+        Member member = this.selectByMobile(mobile);
+        return CopyUtil.copy(member, MemberDto.class);
+    }
 }
