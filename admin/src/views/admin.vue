@@ -447,6 +447,14 @@
 
                 <b class="arrow"></b>
               </li>
+              <li v-show="hasResource('0205')" class="" id="business-sms-sidebar">
+                <router-link to="/business/sms">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  短信管理
+                </router-link>
+
+                <b class="arrow"></b>
+              </li>
               <!--              <li class="active" id="business-chapter-sidebar">-->
               <!--                <router-link to="/business/chapter">-->
               <!--                  <i class="menu-icon fa fa-caret-right"></i>-->
