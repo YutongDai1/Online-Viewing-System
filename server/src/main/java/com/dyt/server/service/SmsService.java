@@ -2,8 +2,11 @@ package com.dyt.server.service;
 
 import com.dyt.server.domain.Sms;
 import com.dyt.server.domain.SmsExample;
-import com.dyt.server.dto.SmsDto;
 import com.dyt.server.dto.PageDto;
+import com.dyt.server.dto.SmsDto;
+import com.dyt.server.enums.SmsStatusEnum;
+import com.dyt.server.exception.BusinessException;
+import com.dyt.server.exception.BusinessExceptionCode;
 import com.dyt.server.mapper.SmsMapper;
 import com.dyt.server.util.CopyUtil;
 import com.dyt.server.util.UuidUtil;
@@ -14,10 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class SmsService {
@@ -82,5 +83,42 @@ public class SmsService {
         smsMapper.deleteByPrimaryKey(id);
     }
 
+    /**
+     * 发送短信验证码
+     * 同手机号同操作1分钟内不能重复发送短信
+     *
+     * @param smsDto
+     */
+    public void sendCode(SmsDto smsDto) {
+        SmsExample example = new SmsExample();
+        SmsExample.Criteria criteria = example.createCriteria();
+        // 查找1分钟内有没有同手机号同操作发送记录且没被用过
+        criteria.andMobileEqualTo(smsDto.getMobile())
+                .andUseEqualTo(smsDto.getUse())
+                .andStatusEqualTo(SmsStatusEnum.NOT_USED.getCode())
+                .andAtGreaterThan(new Date(new Date().getTime() - 1 * 60 * 1000));
+        List<Sms> smsList = smsMapper.selectByExample(example);
 
+        if (smsList == null || smsList.size() == 0) {
+            saveAndSend(smsDto);
+        } else {
+            throw new BusinessException(BusinessExceptionCode.MOBILE_CODE_TOO_FREQUENT);
+        }
+    }
+
+    /**
+     * 保存并发送短信验证码
+     *
+     * @param smsDto
+     */
+    private void saveAndSend(SmsDto smsDto) {
+        // 生成6位数字
+        String code = String.valueOf((int) (((Math.random() * 9) + 1) * 100000));
+        smsDto.setAt(new Date());
+        smsDto.setStatus(SmsStatusEnum.NOT_USED.getCode());
+        smsDto.setCode(code);
+        this.save(smsDto);
+
+        // TODO 调第三方短信接口发送短信
+    }
 }
