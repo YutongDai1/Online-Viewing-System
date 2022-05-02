@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.dyt.server.dto.LoginMemberDto;
 import com.dyt.server.dto.MemberDto;
 import com.dyt.server.dto.ResponseDto;
+import com.dyt.server.dto.SmsDto;
+import com.dyt.server.enums.SmsUseEnum;
 import com.dyt.server.exception.BusinessException;
 import com.dyt.server.service.MemberService;
+import com.dyt.server.service.SmsService;
 import com.dyt.server.util.UuidUtil;
 import com.dyt.server.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -30,6 +33,10 @@ public class MemberController {
 
     @Resource(name = "redisTemplate")
     private RedisTemplate redisTemplate;
+
+    @Resource
+    private SmsService smsService;
+
     /**
      * 保存，id有值时更新，无值时新增
      */
@@ -44,6 +51,15 @@ public class MemberController {
 
         // 密码加密
         memberDto.setPassword(DigestUtils.md5DigestAsHex(memberDto.getPassword().getBytes()));
+
+
+        // 校验短信验证码
+        SmsDto smsDto = new SmsDto();
+        smsDto.setMobile(memberDto.getMobile());
+        smsDto.setCode(memberDto.getSmsCode());
+        smsDto.setUse(SmsUseEnum.REGISTER.getCode());
+        smsService.validCode(smsDto);
+        LOG.info("短信验证码校验通过");
 
         ResponseDto responseDto = new ResponseDto();
         memberService.save(memberDto);
@@ -115,4 +131,6 @@ public class MemberController {
         }
         return responseDto;
     }
+
+
 }
