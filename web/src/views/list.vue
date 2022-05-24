@@ -48,8 +48,9 @@
 <script>
   import TheCourse from "../components/the-course";
   import Pagination from "../components/pagination";
+
   export default {
-    components: {TheCourse, Pagination},
+    components: {Pagination, TheCourse},
     name: 'list',
     data: function () {
       return {
@@ -62,11 +63,10 @@
       }
     },
     mounted() {
-      _this.$refs.pagination.size = 1;
       let _this = this;
+      _this.$refs.pagination.size = 1;
       _this.listCourse(1);
       _this.allCategory();
-      _this.categorys = categorys;
     },
     methods: {
       /**
@@ -88,6 +88,7 @@
           console.log("error：", response);
         })
       },
+
       /**
        * 所有分类查询
        */
@@ -96,6 +97,7 @@
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/category/all').then((response) => {
           let resp = response.data;
           let categorys = resp.content;
+          _this.categorys = categorys;
 
           // 将所有记录格式化成树形结构
           _this.level1 = [];
@@ -103,21 +105,20 @@
             let c = categorys[i];
             if (c.parent === '00000000') {
               _this.level1.push(c);
-
             } else {
               _this.level2.push(c);
             }
           }
-
-          _this.level2 = [];
         })
       },
+
       /**
        * 点击一级分类时
        * @param level1Id
        */
       onClickLevel1(level1Id) {
         let _this = this;
+
         // 点击一级分类时，设置变量，用于课程筛选
         // 二级分类id为空，
         // 如果点击的是【全部】，则一级分类id为空
@@ -126,10 +127,12 @@
         if (level1Id === "00000000") {
           _this.level1Id = null;
         }
-        //点击一级分类时，显示激活状态
+
+        // 点击一级分类时，显示激活状态
         $("#category-" + level1Id).siblings("a").removeClass("cur");
         $("#category-" + level1Id).addClass("cur");
-        //点击一级分类时，二级分类【无限】按钮要设置激活状态
+
+        // 点击一级分类时，二级分类【无限】按钮要设置激活状态
         $("#category-11111111").siblings("a").removeClass("on");
         $("#category-11111111").addClass("on");
 
@@ -154,9 +157,9 @@
             }
           }
         }
+
         // 重新加载课程列表
         _this.listCourse(1);
-
       },
 
       /**
@@ -167,6 +170,7 @@
         let _this = this;
         $("#category-" + level2Id).siblings("a").removeClass("on");
         $("#category-" + level2Id).addClass("on");
+
         // 点击二级分类时，设置变量，用于课程筛选
         // 如果点击的是【无限】，则二级分类id为空
         if (level2Id === "11111111") {
@@ -178,7 +182,6 @@
         // 重新加载课程列表
         _this.listCourse(1);
       },
-
 
     }
   }
@@ -204,7 +207,6 @@
     margin-right: auto;
     /*background-color: #B4D5AC;*/
   }
-
   .header-nav a {
     float: left;
     font-size: 16px;
@@ -215,19 +217,15 @@
     margin-right: 46px;
     font-weight: 700;
   }
-
   .header-nav a:hover {
     color: #c80;
   }
-
   .header-nav a.cur {
     color: #c80;
   }
-
   .header-nav a.cur:before {
     display: block;
   }
-
   .header-nav a:before {
     display: none;
     content: ' ';
@@ -239,7 +237,6 @@
     left: 50%;
     margin-left: -8px;
   }
-
   /* 二级分类 */
   .skill {
     width: 100%;
@@ -247,12 +244,10 @@
     position: relative;
     margin: 0 auto;
   }
-
   .skill a.on {
     color: #c80;
     background: rgba(204, 136, 0, .1);
   }
-
   .skill a {
     float: left;
     margin-right: 20px;
@@ -263,7 +258,6 @@
     border-radius: 6px;
     margin-bottom: 12px;
   }
-
   .skill a:hover {
     background: #d9dde1;
   }
