@@ -95,7 +95,7 @@ public class RoleService {
         List<String> resourceIds = roleDto.getResourceIds();
         // 清空库中所有的当前角色下的记录
         RoleResourceExample example = new RoleResourceExample();
-        example.createCriteria().andIdEqualTo(roleId);
+        example.createCriteria().andRoleIdEqualTo(roleId);
         roleResourceMapper.deleteByExample(example);
 
         //保存角色资源
